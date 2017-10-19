@@ -10,6 +10,7 @@ doc/html/
 tmp/
 vendor/
 zf-mkdoc-theme/
+coverage/
 
 clover.xml
 coveralls-upload.json
