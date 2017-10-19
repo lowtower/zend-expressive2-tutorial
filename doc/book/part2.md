@@ -74,9 +74,7 @@ class AlbumListAction implements ServerMiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     * @return ResponseInterface
+     * {@inheritDoc}
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
@@ -361,8 +359,6 @@ $app->get('/album', Album\Action\AlbumListAction::class, 'album');
 - The configuration above defines the route named `album`, with the
   path `/album`, and maps it to our new `AlbumListAction` middleware.
   With the `get()`-Action the access is restricted to GET requests for this route.
-
-- The separation of module based routing and configuration is shown in a later part.
 
 ## Provide navigation
 

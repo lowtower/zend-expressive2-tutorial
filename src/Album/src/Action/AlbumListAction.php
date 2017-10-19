@@ -25,9 +25,7 @@ class AlbumListAction implements ServerMiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     * @return ResponseInterface
+     * {@inheritDoc}
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
