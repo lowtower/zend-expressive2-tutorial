@@ -3,6 +3,6 @@
 return [
     'db' => [
         'driver' => 'pdo',
-        'dsn'    => 'sqlite:./data/zftutorial.sqlite;charset=utf8',
+        'dsn'    => 'sqlite:./data/album-tutorial.sqlite',
     ],
 ];
