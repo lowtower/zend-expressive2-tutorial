@@ -11,6 +11,8 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Zend\Hydrator\ConfigProvider::class,
+    \Zend\Db\ConfigProvider::class,
     \Album\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),

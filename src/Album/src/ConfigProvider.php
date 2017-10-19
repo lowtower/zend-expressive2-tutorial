@@ -37,6 +37,12 @@ class ConfigProvider
             ],
             'factories'  => [
                 Action\AlbumListAction::class => Action\AlbumListActionFactory::class,
+
+                Model\Repository\AlbumRepositoryInterface::class =>
+                    Model\Repository\AlbumRepositoryFactory::class,
+
+                Model\Storage\AlbumStorageInterface::class =>
+                    Db\AlbumTableGatewayFactory::class,
             ],
         ];
     }
