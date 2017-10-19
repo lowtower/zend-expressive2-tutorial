@@ -96,7 +96,7 @@ To configure database access, create the file
 return [
     'db' => [
         'driver' => 'pdo',
-        'dsn'    => 'sqlite:./data/zftutorial.sqlite;charset=utf8',
+        'dsn'    => 'sqlite:./data/album-tutorial.sqlite',
     ],
 ];
 
