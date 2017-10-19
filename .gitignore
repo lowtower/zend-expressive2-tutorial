@@ -1,7 +1,16 @@
+.buildpath
+.DS_Store
 .idea
-composer.phar
+.project
+.settings/
+.*.sw*
+.*.un~
+nbproject
+doc/html/
+tmp/
+vendor/
+zf-mkdoc-theme/
 
 clover.xml
 coveralls-upload.json
 phpunit.xml
-vendor/
