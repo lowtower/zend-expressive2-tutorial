@@ -602,4 +602,4 @@ album page was setup properly.
 You can compare your code with the example repository when looking at the branch
 `part2`. If you want you can even clone it and have a deeper look.
 
-- [https://gitlab.com/lowtower/zend-expressive2-tutorial/tree/part2](https://gitlab.com/lowtower/zend-expressive2-tutorial/tree/part2_album-module)
+- [https://github.com/lowtower/zend-expressive2-tutorial/tree/part2](https://github.com/lowtower/zend-expressive2-tutorial/tree/part2_album-module)
