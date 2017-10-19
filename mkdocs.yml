@@ -1,0 +1,8 @@
+docs_dir: doc/book
+site_dir: doc/html
+pages:
+    - "Part 1: Setup the application": part1.md
+    - "Part 2: Album list middleware": part2.md
+site_name: zend-expressive2-tutorial
+site_description: zend-expressive2-tutorial
+repo_url: 'https://github.com/lowtower/zend-expressive2-tutorial'

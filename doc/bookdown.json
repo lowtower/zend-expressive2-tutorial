@@ -1,7 +1,0 @@
-{
-  "title": "Zend\\Expressive tutorial",
-  "content": [
-    {"Part 1: Setup the application": "book/part1.md"}
-  ],
-  "target": "./html/"
-}
