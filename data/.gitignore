@@ -1,2 +1,5 @@
 *
 !.gitignore
+!album-create.sql
+!album-fixtures.sql
+!album-tutorial.sqlite
