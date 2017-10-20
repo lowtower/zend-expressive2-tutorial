@@ -99,8 +99,11 @@ return [
         'dsn'    => 'sqlite:./data/album-tutorial.sqlite',
     ],
 ];
-
 ```
+> Please note that we put the configuration of the database
+> in a global configuration file and not in the `ConfigProvider`
+> as the database might be used for different modules as well and
+> thus is not `album module` specific.
 
 The `db` configuration section defines the database connection. We will
 use the PDO driver with a sqlite database, and the database table and user
@@ -136,6 +139,67 @@ we created above.
 
 At this point, we have setup the database, and provided a database adapter to
 our application.
+
+## Install `Zend\Hydrator` component
+
+`zendframework/zend-db` suggest installing the `zend-hydrator` component for
+using `HydratingResultSets`. That's exactly what we're going to do.
+So, before you continue, we'll add the
+[zend-hydrator](https://github.com/zendframework/zend-hydrator)
+component to the application, using composer:
+
+```
+$ composer require zendframework/zend-hydrator
+```
+
+When you run this installation via Composer the `Zend\ComponentInstaller`
+steps in here again and asks you if you want to inject the
+`Zend\Hydrator\ConfigProvider` into your config file. You should select it
+with the choice of `1` and also remember your decision with `y`. It should
+look like this:
+
+![Install Zend\Hydrator component](images/install-zend-hydrator.png)
+
+Please note that your `/config/config.php` should be updated as well by
+adding the `Zend\Hydrator\ConfigProvider`:
+
+```php
+<?php
+
+use Zend\ConfigAggregator\ArrayProvider;
+use Zend\ConfigAggregator\ConfigAggregator;
+use Zend\ConfigAggregator\PhpFileProvider;
+
+// To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
+// `config/autoload/local.php`.
+$cacheConfig = [
+    'config_cache_path' => 'data/config-cache.php',
+];
+
+$aggregator = new ConfigAggregator([
+    \Zend\Hydrator\ConfigProvider::class,
+    \Zend\Db\ConfigProvider::class,
+    \Album\ConfigProvider::class,
+    // Include cache configuration
+    new ArrayProvider($cacheConfig),
+
+    // Default App module config
+    App\ConfigProvider::class,
+
+    // Load application config in a pre-defined order in such a way that local settings
+    // overwrite global settings. (Loaded as first to last):
+    //   - `global.php`
+    //   - `*.global.php`
+    //   - `local.php`
+    //   - `*.local.php`
+    new PhpFileProvider('config/autoload/{{,*.}global,{,*.}local}.php'),
+
+    // Load development config if it exists
+    new PhpFileProvider('config/development.config.php'),
+], $cacheConfig['config_cache_path']);
+
+return $aggregator->getMergedConfig();
+```
 
 ## Create an album entity
 
@@ -362,65 +426,6 @@ database, a web service, etc. &mdash; you can create a new class implementing
 this interface. You would then only need to swap which storage implementation
 you use.
 
-## Install `Zend\Hydrator` component
-
-Before you continue, we'll add the
-[zend-hydrator](https://github.com/zendframework/zend-hydrator)
-component to the application, using composer:
-
-```
-$ composer require zendframework/zend-hydrator
-```
-
-When you run this installation via Composer the `Zend\ComponentInstaller`
-steps in here again and asks you if you want to inject the
-`Zend\Hydrator\ConfigProvider` into your config file. You should select it
-with the choice of `1` and also remember your decision with `y`. It should
-look like this:
-
-![Install Zend\Hydrator component](images/install-zend-hydrator.png)
-
-Please note that your `/config/config.php` should be updated as well by
-adding the `Zend\Hydrator\ConfigProvider`:
-
-```php
-<?php
-
-use Zend\ConfigAggregator\ArrayProvider;
-use Zend\ConfigAggregator\ConfigAggregator;
-use Zend\ConfigAggregator\PhpFileProvider;
-
-// To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
-// `config/autoload/local.php`.
-$cacheConfig = [
-    'config_cache_path' => 'data/config-cache.php',
-];
-
-$aggregator = new ConfigAggregator([
-    \Zend\Hydrator\ConfigProvider::class,
-    \Zend\Db\ConfigProvider::class,
-    \Album\ConfigProvider::class,
-    // Include cache configuration
-    new ArrayProvider($cacheConfig),
-
-    // Default App module config
-    App\ConfigProvider::class,
-
-    // Load application config in a pre-defined order in such a way that local settings
-    // overwrite global settings. (Loaded as first to last):
-    //   - `global.php`
-    //   - `*.global.php`
-    //   - `local.php`
-    //   - `*.local.php`
-    new PhpFileProvider('config/autoload/{{,*.}global,{,*.}local}.php'),
-
-    // Load development config if it exists
-    new PhpFileProvider('config/development.config.php'),
-], $cacheConfig['config_cache_path']);
-
-return $aggregator->getMergedConfig();
-```
-
 ## Create a table gateway
 
 A [table data gateway](http://martinfowler.com/eaaCatalog/tableDataGateway.html)
@@ -569,8 +574,9 @@ in the same path. The `AlbumTableGatewayFactory` requests the instance of the
 database adapter via the service container (zend-servicemanager in our case),
 and then creates a [hydrating](http://zendframework.github.io/zend-hydrator/quick-start/#usage)
 result set prototype using `Zend\Hydrator\ArraySerializable` and an
-`AlbumEntity` instance. Both the adapter and the prototype are injected into the
-constructor of the `AlbumTableGateway`.
+`AlbumEntity` instance. The adapter is created automatically in the `HydratingResultSet`
+when passing `null` to the constructor and the prototype is injected into the constructor
+of the `AlbumTableGateway`.
 
 ```php
 <?php
@@ -581,7 +587,6 @@ use Album\Model\Entity\AlbumEntity;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Hydrator\ArraySerializable;
 
 class AlbumTableGatewayFactory
 {
@@ -592,7 +597,7 @@ class AlbumTableGatewayFactory
     public function __invoke(ContainerInterface $container)
     {
         $resultSetPrototype = new HydratingResultSet(
-            new ArraySerializable(),
+            null,
             new AlbumEntity()
         );
 
@@ -608,7 +613,7 @@ Please note that [zend-hydrator](https://github.com/zendframework/zend-hydrator)
 is used to provide de/serialization between `AlbumEntity` instances and the
 array data read from the database. The concrete `ArraySerializable` hydrator
 uses the methods `exchangeArray()` and `getArrayCopy()` defined in
-`Zend\Stdlib\ArraySerializableInterface` and implemented in the `AlbumEntity` .
+`Zend\Stdlib\ArraySerializableInterface` and implemented in the `AlbumEntity`.
 
 ## Create an album repository
 
@@ -875,9 +880,7 @@ class AlbumListAction implements ServerMiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     * @return ResponseInterface
+     * {@inheritDoc}
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {

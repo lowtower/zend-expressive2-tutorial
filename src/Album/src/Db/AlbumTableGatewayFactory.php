@@ -6,7 +6,6 @@ use Album\Model\Entity\AlbumEntity;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Hydrator\ArraySerializable;
 
 class AlbumTableGatewayFactory
 {
@@ -17,7 +16,7 @@ class AlbumTableGatewayFactory
     public function __invoke(ContainerInterface $container)
     {
         $resultSetPrototype = new HydratingResultSet(
-            new ArraySerializable(),
+            null,
             new AlbumEntity()
         );
 
