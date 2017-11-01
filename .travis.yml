@@ -39,7 +39,7 @@ matrix:
         - DEPS=locked
         - CS_CHECK=true
         - TEST_COVERAGE=true
-        - CREATE_DOCS=false
+        - CREATE_DOCS=true
     - php: 7.1
       env:
         - DEPS=latest
