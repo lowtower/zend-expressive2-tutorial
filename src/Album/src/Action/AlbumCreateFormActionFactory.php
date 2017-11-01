@@ -22,8 +22,6 @@ class AlbumCreateFormActionFactory
         $template  = $container->get(TemplateRendererInterface::class);
         $albumForm = $container->get(AlbumDataForm::class);
 
-        return new AlbumCreateFormAction(
-            $template, $albumForm
-        );
+        return new AlbumCreateFormAction($template, $albumForm);
     }
 }

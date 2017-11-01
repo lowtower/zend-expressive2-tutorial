@@ -25,8 +25,6 @@ class AlbumCreateHandleActionFactory
         $albumRepository = $container->get(AlbumRepositoryInterface::class);
         $albumForm       = $container->get(AlbumDataForm::class);
 
-        return new AlbumCreateHandleAction(
-            $router, $albumRepository, $albumForm
-        );
+        return new AlbumCreateHandleAction($router, $albumRepository, $albumForm);
     }
 }

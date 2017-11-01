@@ -41,11 +41,10 @@ class AlbumCreateFormAction implements ServerMiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     * @return ResponseInterface
+     * {@inheritDoc}
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate) {
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    {
         if ($this->albumForm->getMessages()) {
             $message = 'Please check your input!';
         } else {
