@@ -479,11 +479,10 @@ class AlbumCreateFormAction implements ServerMiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     * @return ResponseInterface
+     * {@inheritDoc}
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate) {
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    {
         if ($this->albumForm->getMessages()) {
             $message = 'Please check your input!';
         } else {
@@ -546,9 +545,7 @@ class AlbumCreateFormActionFactory
         $template  = $container->get(TemplateRendererInterface::class);
         $albumForm = $container->get(AlbumDataForm::class);
 
-        return new AlbumCreateFormAction(
-            $template, $albumForm
-        );
+        return new AlbumCreateFormAction($template, $albumForm);
     }
 }
 ```
@@ -699,9 +696,7 @@ class AlbumCreateHandleActionFactory
         $albumRepository = $container->get(AlbumRepositoryInterface::class);
         $albumForm       = $container->get(AlbumDataForm::class);
 
-        return new AlbumCreateHandleAction(
-            $router, $albumRepository, $albumForm
-        );
+        return new AlbumCreateHandleAction($router, $albumRepository, $albumForm);
     }
 }
 ```
