@@ -39,6 +39,7 @@ matrix:
         - DEPS=locked
         - CS_CHECK=true
         - TEST_COVERAGE=true
+        - CREATE_DOCS=false
     - php: 7.1
       env:
         - DEPS=latest
@@ -69,6 +70,7 @@ script:
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
+  - if [[ $CREATE_DOCS == 'true' ]]; then mkdocs gh-deploy ; fi
 
 notifications:
   email: false
