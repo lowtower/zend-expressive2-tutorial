@@ -2,6 +2,7 @@
 
 namespace Album\Action;
 
+use Album\Model\Repository\AlbumRepositoryInterface;
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -13,8 +14,9 @@ class AlbumListActionFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        $template = $container->get(TemplateRendererInterface::class);
-
-        return new AlbumListAction($template);
+        return new AlbumListAction(
+            $container->get(TemplateRendererInterface::class),
+            $container->get(AlbumRepositoryInterface::class)
+        );
     }
 }

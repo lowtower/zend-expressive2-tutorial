@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS `album` (
+    `id`     INTEGER PRIMARY KEY AUTOINCREMENT,
+    `artist` VARCHAR(100) NOT NULL,
+    `title`  VARCHAR(100) NOT NULL
+);
