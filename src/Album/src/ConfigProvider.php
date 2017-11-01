@@ -42,6 +42,14 @@ class ConfigProvider
                     Action\AlbumCreateFormActionFactory::class,
                 Action\AlbumCreateHandleAction::class =>
                     Action\AlbumCreateHandleActionFactory::class,
+                Action\AlbumUpdateFormAction::class =>
+                    Action\AlbumUpdateFormActionFactory::class,
+                Action\AlbumUpdateHandleAction::class =>
+                    Action\AlbumUpdateHandleActionFactory::class,
+                Action\AlbumDeleteFormAction::class =>
+                    Action\AlbumDeleteFormActionFactory::class,
+                Action\AlbumDeleteHandleAction::class =>
+                    Action\AlbumDeleteHandleActionFactory::class,
 
                 Model\Repository\AlbumRepositoryInterface::class =>
                     Model\Repository\AlbumRepositoryFactory::class,
@@ -54,6 +62,8 @@ class ConfigProvider
 
                 Form\AlbumDataForm::class =>
                     Form\AlbumDataFormFactory::class,
+                Form\AlbumDeleteForm::class =>
+                    Form\AlbumDeleteFormFactory::class,
             ],
         ];
     }
