@@ -36,13 +36,24 @@ class ConfigProvider
             'invokables' => [
             ],
             'factories'  => [
-                Action\AlbumListAction::class => Action\AlbumListActionFactory::class,
+                Action\AlbumListAction::class =>
+                    Action\AlbumListActionFactory::class,
+                Action\AlbumCreateFormAction::class =>
+                    Action\AlbumCreateFormActionFactory::class,
+                Action\AlbumCreateHandleAction::class =>
+                    Action\AlbumCreateHandleActionFactory::class,
 
                 Model\Repository\AlbumRepositoryInterface::class =>
                     Model\Repository\AlbumRepositoryFactory::class,
 
+                Model\InputFilter\AlbumInputFilter::class =>
+                    Model\InputFilter\AlbumInputFilterFactory::class,
+
                 Model\Storage\AlbumStorageInterface::class =>
                     Db\AlbumTableGatewayFactory::class,
+
+                Form\AlbumDataForm::class =>
+                    Form\AlbumDataFormFactory::class,
             ],
         ];
     }

@@ -28,4 +28,10 @@
 
 $app->get('/', App\Action\HomePageAction::class, 'home');
 $app->get('/api/ping', App\Action\PingAction::class, 'api.ping');
+
 $app->get('/album', Album\Action\AlbumListAction::class, 'album');
+$app->get('/album/create', Album\Action\AlbumCreateFormAction::class, 'album-create');
+$app->post('/album/create/handle',[
+    Album\Action\AlbumCreateHandleAction::class,
+    Album\Action\AlbumCreateFormAction::class,
+], 'album-create-handle');
