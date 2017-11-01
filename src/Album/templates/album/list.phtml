@@ -20,10 +20,23 @@ $this->headTitle('Albums');
     <tbody>
     <?php /** @var AlbumEntity $albumEntity */ ?>
     <?php foreach ($this->albumList as $albumEntity) : ?>
+        <?php
+        $urlParams = ['id' => $albumEntity->getId()];
+        $updateUrl = $this->url('album-update', $urlParams);
+        $deleteUrl = $this->url('album-delete', $urlParams);
+        ?>
         <tr>
-            <td><?= $albumEntity->getId(); ?></td>
-            <td><?= $albumEntity->getArtist(); ?></td>
-            <td><?= $albumEntity->getTitle(); ?></td>
+            <td><?= $albumEntity->getId() ?></td>
+            <td><?= $albumEntity->getArtist() ?></td>
+            <td><?= $albumEntity->getTitle() ?></td>
+            <td>
+                <a href="<?= $updateUrl ?>" class="btn btn-success">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <a href="<?= $deleteUrl ?>" class="btn btn-success">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
         </tr>
     <?php endforeach; ?>
     </tbody>

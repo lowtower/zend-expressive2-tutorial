@@ -35,3 +35,17 @@ $app->post('/album/create/handle',[
     Album\Action\AlbumCreateHandleAction::class,
     Album\Action\AlbumCreateFormAction::class,
 ], 'album-create-handle');
+$app->get("/album/update/{id:\d+}", [
+    Album\Action\AlbumUpdateFormAction::class,
+], 'album-update');
+$app->post("/album/update/{id:\d+}/handle", [
+    Album\Action\AlbumUpdateHandleAction::class,
+    Album\Action\AlbumUpdateFormAction::class,
+], 'album-update-handle');
+$app->get("/album/delete/{id:\d+}", [
+    Album\Action\AlbumDeleteFormAction::class,
+], 'album-delete');
+$app->post("/album/delete/{id:\d+}/handle", [
+    Album\Action\AlbumDeleteHandleAction::class,
+    Album\Action\AlbumDeleteFormAction::class,
+], 'album-delete-handle');

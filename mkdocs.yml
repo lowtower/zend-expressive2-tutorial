@@ -5,6 +5,7 @@ pages:
     - "Part 2: Album list middleware":  part2.md
     - "Part 3: Model and database":     part3.md
     - "Part 4: Forms and input filter": part4.md
+    - "Part 5: Updating and deleting":  part5.md
 site_name: zend-expressive2-tutorial
 site_description: zend-expressive2-tutorial
 repo_url: 'https://github.com/lowtower/zend-expressive2-tutorial'
