@@ -298,9 +298,9 @@ project at a later time.
 
 The `AlbumDataForm` also needs a factory which is created in the
 `AlbumDataFormFactory.php` file in the same path. This factory instantiates
-the `AlbumDataForm` form and injects an instance of the
-`Zend\Hydrator\ArraySerializable` and the album input filter we just
-created.
+the `AlbumDataForm` form and injects an instance of the album input filter we just
+created.An instance of `Zend\Hydrator\ArraySerializable` is generated automatically
+when calling the method `getHydrator()` on the `Zend\Form` object.
 
 ```php
 <?php
@@ -308,7 +308,6 @@ namespace Album\Form;
 
 use Interop\Container\ContainerInterface;
 use Zend\Form\Form;
-use Zend\Hydrator\ArraySerializable;
 use Album\Model\InputFilter\AlbumInputFilter;
 
 /**
@@ -325,11 +324,9 @@ class AlbumDataFormFactory extends Form
      */
     public function __invoke(ContainerInterface $container)
     {
-        $hydrator    = new ArraySerializable();
         $inputFilter = $container->get(AlbumInputFilter::class);
 
         $form = new AlbumDataForm();
-        $form->setHydrator($hydrator);
         $form->setInputFilter($inputFilter);
         $form->init();
 
@@ -338,9 +335,7 @@ class AlbumDataFormFactory extends Form
 }
 ```
 
-Please note that the injection of the `Zend\Hydrator\ArraySerializable` is
-done for a special reason. We can now bind an `AlbumEntity` instance to
-the form and the hydrator helps to extract the data from the entity and
+Please note that the hydrator helps to extract the data from the entity and
 fill the form elements with these values. We could also pass array data to
 the form and get the `AlbumEntity` populated with this data after a
 successful form validation.

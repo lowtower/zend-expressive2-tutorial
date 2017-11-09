@@ -3,7 +3,6 @@ namespace Album\Form;
 
 use Interop\Container\ContainerInterface;
 use Zend\Form\Form;
-use Zend\Hydrator\ArraySerializable;
 use Album\Model\InputFilter\AlbumInputFilter;
 
 /**
@@ -20,11 +19,9 @@ class AlbumDataFormFactory extends Form
      */
     public function __invoke(ContainerInterface $container)
     {
-        $hydrator    = new ArraySerializable();
         $inputFilter = $container->get(AlbumInputFilter::class);
 
         $form = new AlbumDataForm();
-        $form->setHydrator($hydrator);
         $form->setInputFilter($inputFilter);
         $form->init();
 
